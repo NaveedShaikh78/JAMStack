@@ -1,0 +1,7 @@
+Technologies to Use
+React 
+Gatsby
+NextJS
+
+CMS
+StoryBlok
