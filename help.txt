@@ -5,3 +5,6 @@ NextJS
 
 CMS
 StoryBlok
+
+Strappy  Template
+npx create-strapi-app my-app-name --template https://github.com/strapi/strapi-template-portfolio
