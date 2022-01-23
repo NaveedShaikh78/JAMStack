@@ -7,10 +7,13 @@
   },
   "dependencies": {
     "axios": "^0.25.0",
+    "contentful": "^9.1.5",
     "draft-js": "^0.11.7",
     "draft-js-export-html": "^1.4.1",
+    "got": "^12.0.1",
     "markdown-draft-js": "^2.4.0",
-    "next": "^12.0.8",
+    "next": "^10.0.1",
+    "npm-install-missing": "^0.1.4",
     "react": "^17.0.2",
     "react-dom": "*",
     "react-draft-wysiwyg": "^1.14.7"

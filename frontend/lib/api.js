@@ -1,3 +1,13 @@
+//import contentful from 'contentful'
+import got from 'got'
+// var client = contentful.createClient({
+//   space: 'xd01elyp3p3e',
+//   accessToken: 'Jp8IqNNCZqI2SwtlsLRyeJLhJf4UBhBpjkoo4VMttj8',
+// });
+const spaceID = "xd01elyp3p3e";
+const accessToken = "Jp8IqNNCZqI2SwtlsLRyeJLhJf4UBhBpjkoo4VMttj8";
+const endpoint = "https://graphql.contentful.com/content/v1/spaces/" + spaceID;
+
 export function getServerURL(path = "") {
   return "http://localhost:1337" + path
   // const url = `${process.env.API_URL || "https://strapi-vercel-webinar.herokuapp.com"
@@ -9,39 +19,40 @@ export async function fetchAPI(query) {
   const requestUrl = getServerURL("/graphql");
   //const response = await fetch(requestUrl);
 
-  const res = await fetch(requestUrl,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ query })
+  const options = {
+    headers: {
+      Authorization: "Bearer " + accessToken,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ query }),
+  };
+
+  const out = await got
+    .post(endpoint, options)
+    .then((response) => {
+      console.log(response.body);
+      return JSON.parse(response.body);
+    })
+    .catch((error) => {
+      console.log(error);
     });
-
-  const out = await res.json();
-
   return out.data;
 
 }
 export async function getHeroes() {
-  const out = await fetchAPI(`query Heroes {
-      heroes {
-        data {
-            id
-          attributes {
-            Image1 {
-              data {
-                attributes {
-                  url
-                }
-              }
-            }
-            Description
-          }
+  const heroQuery = `{
+    heroCollection {
+      items {
+        image {
+          id
+          description
+          url
         }
       }
-    }`)
-  return out.heroes.data
+    }
+  }`;
+  const out = await fetchAPI(heroQuery)
+  return out.heroCollection.items
 }
 export async function getPolicies() {
   const out = await fetchAPI(`query privacy {
